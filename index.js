@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const csrf = require('csurf')
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
@@ -16,7 +17,6 @@ const userMiddleware = require('./middleware/user')
 
 const MONGODB_URI = `mongodb+srv://alex:XKn2hdqbw3XLBUyI@cluster0-ogayr.mongodb.net/test?retryWrites=true&w=majority`
 const app = express()
-
 const hbs = exphbs.create({
   defaultLayout: 'main',
   extname: 'hbs'
@@ -38,6 +38,7 @@ app.use(session({
   saveUninitialized: false,
   store
 }))
+app.use(csrf())
 app.use(varMiddleware)
 app.use(userMiddleware)
 
